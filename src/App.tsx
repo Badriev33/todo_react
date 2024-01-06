@@ -4,6 +4,7 @@ import './App.css';
 import {Todolist} from './Todolist'
 import { TaskType } from './Todolist';
 import { v1 } from 'uuid';
+import { log } from 'console';
 
 
 
@@ -29,6 +30,17 @@ function App() {
     setTasks(newTask)
   }
 
+  function changeStatus(taskId: string, isDone: boolean) {
+      let task = tasks.find(v => v.id === taskId)
+
+      if (task) {
+        task.isDone = isDone
+      }
+
+      setTasks([...tasks])
+  }
+
+
   function changeFilter(value: FilterValuesType) {
     setFilter(value)
   }
@@ -45,11 +57,14 @@ function App() {
 
   return (
     <div className="App">
-      <Todolist tasks={tasksForTodolist} 
-                title="my first to-do list"
-                removeTask={removeTask}   
-                changeFilter={changeFilter}   
-                addTask={addTask}    
+      <Todolist 
+          tasks={tasksForTodolist} 
+          title="my first to-do list"
+          removeTask={removeTask}   
+          changeFilter={changeFilter}   
+          addTask={addTask}    
+          changeTaskStatus={changeStatus}
+          filter={filter}
       ></Todolist>
     </div>
   );
